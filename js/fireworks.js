@@ -63,10 +63,10 @@ FireWorks.prototype = {
                     position = "absolute";
                     top = param.y + document.body.scrollTop + "px";
                     left = param.x + "px";
-                    width = "2px";
-                    height = "2px";
+                    width = "3px";
+                    height = "3px";
                     overflow = "hidden";
-                    borderRadius = "2px";
+                    borderRadius = "3px";
                     background = fgm.getRanColor();
                 }
                 ;
