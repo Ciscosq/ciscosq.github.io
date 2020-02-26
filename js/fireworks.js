@@ -54,7 +54,7 @@ FireWorks.prototype = {
             //在50-100之间随机生成碎片
             //由于IE浏览器处理效率低, 随机范围缩小至20-30
             //自动放烟花时, 随机范围缩小至20-30
-            var len = (/msie/i.test(navigator.userAgent) || that.type == 2) ? fgm.randomRange(5, 15) : fgm.randomRange(5, 15)
+            var len = (/msie/i.test(navigator.userAgent) || that.type == 2) ? fgm.randomRange(8, 15) : fgm.randomRange(8, 15)
             //产生所有烟花爆炸颗粒实体
             for (i = 0; i < len; i++) {
                 //烟花颗粒形态实体
@@ -70,8 +70,8 @@ FireWorks.prototype = {
                     background = fgm.getRanColor();
                 }
                 ;
-                oChip.speedX = fgm.randomRange(-20, 20);
-                oChip.speedY = fgm.randomRange(-20, 20);
+                oChip.speedX = fgm.randomRange(-22, 22);        //控制消失速度
+                oChip.speedY = fgm.randomRange(-22, 22);
                 oFrag.appendChild(oChip);
                 aChip[i] = oChip
             }
