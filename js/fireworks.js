@@ -70,8 +70,8 @@ FireWorks.prototype = {
                     background = fgm.getRanColor();
                 }
                 ;
-                oChip.speedX = fgm.randomRange(-22, 22);        //控制消失速度
-                oChip.speedY = fgm.randomRange(-22, 22);
+                oChip.speedX = fgm.randomRange(-15, 15);        //控制消失速度
+                oChip.speedY = fgm.randomRange(-15, 15);
                 oFrag.appendChild(oChip);
                 aChip[i] = oChip
             }
@@ -102,12 +102,15 @@ FireWorks.prototype = {
     }
 };
  
+
 fgm.on(window, "load", function () {
     var oFireWorks = new FireWorks();
     oFireWorks.type = 1;
     oFireWorks.initialize();
 });
  
+
+
 fgm.on(document, "contextmenu", function (event) {
     var oEvent = event || window.event;
     oEvent.preventDefault ? oEvent.preventDefault() : oEvent.returnValue = false
