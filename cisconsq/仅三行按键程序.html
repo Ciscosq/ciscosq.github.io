@@ -5,8 +5,6 @@
   <!-- SEO相关 -->
   
     
-      <meta name="robots" content="noindex,follow">
-    
   
   <!-- 渲染优化 -->
   <meta name="renderer" content="webkit">
@@ -18,7 +16,7 @@
 
   <!-- 页面元数据 -->
   
-    <title>Archive: 2020/3 - Ciscosq</title>
+    <title>仅三行按键程序 - Ciscosq</title>
   
   
 
@@ -86,7 +84,7 @@
 <body>
   
   <div class="cover-wrapper">
-    <cover class='cover  half'>
+    <cover class='cover page half'>
       
         
   <p class="title ">Cisconsq</p>
@@ -292,22 +290,11 @@
       
 
 <div class='l_main'>
-	
-		
-  <section class="post-list ">
-    
-      
-        
-          
-        
-      
-    
-    
-      
-        
-          <div class='post-wrapper'>
-            <article class="post white-box card-shadow  reveal ">
   
+
+  
+    <article id="page" class="post white-box card-shadow  article-type-page" itemscope itemprop="blogPost">
+      
 
 
   <section class='meta'>
@@ -316,11 +303,13 @@
     <div class="meta" id="header-meta">
       
         
-  <h2 class="title">
-    <a href="/2020/03/06/Hexo%E7%B3%BB%E5%88%97%E6%93%8D%E4%BD%9C/">
-      Hexo博客系列操作
-    </a>
-  </h2>
+  
+    <h1 class="title">
+      <a href="/cisconsq/%E4%BB%85%E4%B8%89%E8%A1%8C%E6%8C%89%E9%94%AE%E7%A8%8B%E5%BA%8F.html">
+        仅三行按键程序
+      </a>
+    </h1>
+  
 
 
       
@@ -340,31 +329,18 @@
           
         
           
+            
+
+          
+        
+          
             <div class="new-meta-item date">
   <a class='notlink'>
     <i class="fas fa-edit" aria-hidden="true"></i>
-    <p> Mar 6, 2020</p>
+    <p> Mar 24, 2020</p>
   </a>
 </div>
 
-          
-        
-          
-            
-  
-  <div class='new-meta-item category'>
-    <a href='/category/hexo/' rel="nofollow">
-      <i class="fas fa-folder-open" aria-hidden="true"></i>
-      <p>hexo</p>
-    </a>
-  </div>
-
-
-          
-        
-          
-            
-  
           
         
           
@@ -380,153 +356,140 @@
   </section>
 
 
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <p>本文将讲述搭建博客以及编写博文一系列步骤。</p>
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          <p>新型的<strong>按键</strong>扫描程序<br>不过我在网上游逛了很久，也看过不少源程序了，没有发现这种按键处理办法的踪迹，所以，我将他共享出来，和广大同僚们共勉。我非常坚信这种按键处理办法的便捷和高效，你可以移植到任何一种嵌入式处理器上面，因为C语言强大的可移植性。<br>同时，这里面用到了一些分层的思想，在单片机当中也是相当有用的，也是本文的另外一个重点。<br>对于老鸟，我建议直接看那两个表达式，然后自己想想就会懂的了，也不需要听我后面的自吹自擂了，我可没有班门弄斧的意思，hoho～～但是对于新手，我建议将全文看完。因为这是实际项目中总结出来的经验，学校里面学不到的东西。<br>以下假设你懂C语言，因为纯粹的C语言描述，所以和处理器平台无关，你可以在MCS-51，AVR，PIC，甚至是ARM平台上面测试这个程序性能。当然，我自己也是在多个项目用过，效果非常好的。<br>好了，工程人员的习惯，废话就应该少说，开始吧。以下我以AVR的MEGA8作为平台讲解，没有其它原因，因为我手头上只有AVR的板子而已没有51的。用51也可以，只是芯片初始化部分不同，还有寄存器名字不同而已。<br>核心算法：<br>unsigned char Trg;<br>unsigned char Cont;<br>void KeyRead( void )<br>{<br>  unsigned char ReadData = PINB^0xff;  // 1<br>  Trg = ReadData &amp; (ReadData ^ Cont);    // 2<br>  Cont = ReadData;                     // 3<br>}<br>完了。有没有一种不可思议的感觉？当然，没有想懂之前会那样，想懂之后就会惊叹于这算法的精妙！！<br>下面是程序解释：<br>Trg（triger） 代表的是触发，Cont（continue）代表的是连续按下。<br>1：读PORTB的端口数据，取反，然后送到ReadData 临时变量里面保存起来。<br>2：算法1，用来计算触发变量的。一个位与操作，一个异或操作，我想学过C语言都应该懂吧？Trg为全局变量，其它程序可以直接引用。<br>3：算法2，用来计算连续变量。<br>看到这里，有种“知其然，不知其所以然”的感觉吧？代码很简单，但是它到底是怎么样实现我们的目的的呢？好，下面就让我们绕开云雾看青天吧。<br>我们最常用的按键接法如下：AVR是有内部上拉功能的，但是为了说明问题，我是特意用外部上拉电阻。那么，按键没有按下的时候，读端口数据为1，如果按键按下，那么端口读到0。下面就看看具体几种情况之下，这算法是怎么一回事。<br>（1）    没有按键的时候<br>端口为0xff，ReadData读端口并且取反，很显然，就是 0x00 了。<br>Trg = ReadData &amp; (ReadData ^ Cont); （初始状态下，Cont也是为0的）很简单的数学计算，因为ReadData为0，则它和任何数“相与”，结果也是为0的。<br>Cont = ReadData; 保存Cont 其实就是等于ReadData，为0；<br>结果就是：<br>ReadData ＝ 0；<br>Trg ＝ 0；<br>Cont ＝ 0；<br>（2）    第一次PB0按下的情况<br>端口数据为0xfe，ReadData读端口并且取反，很显然，就是 0x01 了。<br>Trg = ReadData &amp; (ReadData ^ Cont); 因为这是第一次按下，所以Cont是上次的值，应为为0。那么这个式子的值也不难算，也就是 Trg = 0x01 &amp; (0x01^0x00) = 0x01<br>Cont = ReadData = 0x01；<br>结果就是：<br>ReadData ＝ 0x01；<br>Trg ＝ 0x01；Trg只会在这个时候对应位的值为1，其它时候都为0<br>Cont ＝ 0x01；<br>（3）    PB0按着不松（长按键）的情况<br>端口数据为0xfe，ReadData读端口并且取反是 0x01 了。<br>Trg = ReadData &amp; (ReadData ^ Cont); 因为这是连续按下，所以Cont是上次的值，应为为0x01。那么这个式子就变成了 Trg = 0x01 &amp; (0x01^0x01) = 0x00<br>Cont = ReadData = 0x01；<br>结果就是：<br>ReadData ＝ 0x01；<br>Trg ＝ 0x00；<br>Cont ＝ 0x01；<br>因为现在按键是长按着，所以MCU会每个一定时间（20ms左右）不断的执行这个函数，那么下次执行的时候情况会是怎么样的呢？<br>ReadData ＝ 0x01；这个不会变，因为按键没有松开<br>Trg ＝ ReadData &amp; (ReadData ^ Cont) ＝ 0x01 &amp; (0x01 ^ 0x01) = 0 ，只要按键没有松开，这个Trg值永远为 0 ！！！<br>Cont ＝ 0x01；只要按键没有松开，这个值永远是0x01！！<br>（4）    按键松开的情况<br>端口数据为0xff，ReadData读端口并且取反是 0x00 了。<br>Trg = ReadData &amp; (ReadData ^ Cont) = 0x00 &amp; (0x00^0x01) = 0x00<br>Cont = ReadData = 0x00；<br>结果就是：<br>ReadData ＝ 0x00；<br>Trg ＝ 0x00；<br>Cont ＝ 0x00；<br>很显然，这个回到了初始状态，也就是没有按键按下的状态。<br>总结一下，不知道想懂了没有？其实很简单，答案如下：<br>Trg 表示的就是触发的意思，也就是跳变，只要有按键按下（电平从1到0的跳变），那么Trg在对应按键的位上面会置一，我们用了PB0则Trg的值为0x01，类似，如果我们PB7按下的话，Trg 的值就应该为 0x80 ，这个很好理解，还有，最关键的地方，Trg 的值每次按下只会出现一次，然后立刻被清除，完全不需要人工去干预。所以按键功能处理程序不会重复执行，省下了一大堆的条件判断，这个可是精粹哦！！Cont代表的是长按键，如果PB0按着不放，那么Cont的值就为 0x01，相对应，PB7按着不放，那么Cont的值应该为0x80，同样很好理解。<br>如果还是想不懂的话，可以自己演算一下那两个表达式，应该不难理解的。<br>因为有了这个支持，那么按键处理就变得很爽了，下面看应用：<br>应用一：一次触发的按键处理<br>假设PB0为蜂鸣器按键，按一下，蜂鸣器beep的响一声。这个很简单，但是大家以前是怎么做的呢？对比一下看谁的方便？<br>#define KEY_BEEP 0x01<br>void KeyProc(void)<br>{<br>    if (Trg &amp; KEY_BEEP) // 如果按下的是KEY_BEEP<br>  {<br>      Beep();        // 执行蜂鸣器处理函数<br>  }<br>}<br>怎么样？够和谐不？记得前面解释说Trg的精粹是什么？精粹就是只会出现一次。所以你按下按键的话，Trg &amp; KEY_BEEP 为“真”的情况只会出现一次，所以处理起来非常的方便，蜂鸣器也不会没事乱叫，hoho～～～<br>或者你会认为这个处理简单，没有问题，我们继续。<br>应用2：长按键的处理<br>项目中经常会遇到一些要求，例如：一个按键如果短按一下执行功能A，如果长按2秒不放的话会执行功能B，又或者是要求3秒按着不放，计数连加什么什么的功能，很实际。不知道大家以前是怎么做的呢？我承认以前做的很郁闷。<br>但是看我们这里怎么处理吧，或许你会大吃一惊，原来程序可以这么简单<br>这里具个简单例子，为了只是说明原理，PB0是模式按键，短按则切换模式，PB1就是加，如果长按的话则连加（玩过电子表吧？没错，就是那个！）<br>#define KEY_MODE 0x01  // 模式按键<br>#define KEY_PLUS 0x02   // 加<br>void KeyProc(void)<br>{<br>    if (Trg &amp; KEY_MODE) // 如果按下的是KEY_MODE，而且你常按这按键也没有用，<br>  {             //它是不会执行第二次的哦 ， 必须先松开再按下<br>      Mode++;      // 模式寄存器加1，当然，这里只是演示，你可以执行你想<br>                // 执行的任何代码<br>  }<br>  if (Cont &amp; KEY_PLUS) // 如果“加”按键被按着不放<br>  {<br>      cnt_plus++;    // 计时<br>      if (cnt_plus &gt; 100) // 20ms*100 = 2S 如果时间到<br>      {<br>         Func();    // 你需要的执行的程序<br>      }<br>  }<br>}<br>不知道各位感觉如何？我觉得还是挺简单的完成了任务，当然，作为演示用代码。<br>应用3：点触型按键和开关型按键的混合使用<br>点触形按键估计用的最多，特别是单片机。开关型其实也很常见，例如家里的电灯，那些按下就不松开，除非关。这是两种按键形式的处理原理也没啥特别，但是你有没有想过，如果一个系统里面这两种按键是怎么处理的？我想起了我以前的处理，分开两个非常类似的处理程序，现在看起来真的是笨的不行了，但是也没有办法啊，结构决定了程序。不过现在好了，用上面介绍的办法，很轻松就可以搞定。<br>原理么？可能你也会想到，对于点触开关，按照上面的办法处理一次按下和长按，对于开关型，我们只需要处理Cont就OK了，为什么？很简单嘛，把它当成是一个长按键，这样就找到了共同点，屏蔽了所有的细节。程序就不给了，完全就是应用2的内容，在这里提为了就是说明原理～～<br>好了，这个好用的按键处理算是说完了。可能会有朋友会问，为什么不说延时消抖问题？哈哈，被看穿了。果然不能偷懒。下面谈谈这个问题，顺便也就非常简单的谈谈我自己用时间片轮办法，以及是如何消抖的。<br>延时消抖的办法是非常传统，也就是 第一次判断有按键，延时一定的时间（一般习惯是20ms）再读端口，如果两次读到的数据一样，说明了是真正的按键，而不是抖动，则进入按键处理程序。<br>当然，不要跟我说你delay（20）那样去死循环去，真是那样的话，我衷心的建议你先放下手上所有的东西，好好的去了解一下操作系统的分时工作原理，大概知道思想就可以，不需要详细看原理，否则你永远逃不出“菜鸟”这个圈子。当然我也是菜鸟。我的意思是，真正的单片机入门，是从学会处理多任务开始的，这个也是学校程序跟公司程序的最大差别。当然，本文不是专门说这个的，所以也不献丑了。<br>我的主程序架构是这样的：<br>volatile unsigned char Intrcnt;<br>void InterruptHandle()  // 中断服务程序<br>{<br>    Intrcnt++;      // 1ms 中断1次，可变<br>}<br>void main(void)<br>{<br>    SysInit();<br>  while(1)       // 每20ms 执行一次大循环<br>  {<br>     KeyRead();        // 将每个子程序都扫描一遍<br>     KeyProc();<br>     Func1();<br>     Funt2();<br>     …<br>     …<br>       while(1)<br>     {<br>         if (Intrcnt&gt;20)   // 一直在等，直到20ms时间到<br>         {<br>            Intrcnt=”0”;<br>            break;    // 返回主循环<br>         }<br>     }<br>    }<br>}<br>貌似扯远了，回到我们刚才的问题，也就是怎么做按键消抖处理。我们将读按键的程序放在了主循环，也就是说，每20ms我们会执行一次KeyRead()函数来得到新的Trg 和 Cont 值。好了，下面是我的消抖部分：很简单<br>基本架构如上，我自己比较喜欢的，一直在用。当然，和这个配合，每个子程序必须执行时间不长，更加不能死循环，一般采用有限状态机的办法来实现，具体参考其它资料咯。<br>懂得基本原理之后，至于怎么用就大家慢慢思考了，我想也难不到聪明的工程师们。例如还有一些处理，<br>怎么判断按键释放？很简单，Trg 和Cont都为0 则肯定已经释放了。</p>
+
+          
+        </div>
+        
+          
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
       
         
-          <div class="button readmore">
-            <a href="/2020/03/06/Hexo%E7%B3%BB%E5%88%97%E6%93%8D%E4%BD%9C/" class="flat-box">
-              <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-              Read More
-            </a>
-          </div>
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-03-24T21:28:10+08:00">
+  <a class='notlink'>
+    <i class="fas fa-save" aria-hidden="true"></i>
+    <p> Mar 24, 2020</p>
+  </a>
+</div>
+
         
       
-    </div>          
-     <!--卡片底部标签引脚
+        
+          
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
     
-      <div class="full-width auto-padding tags">
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/cisconsq/%E4%BB%85%E4%B8%89%E8%A1%8C%E6%8C%89%E9%94%AE%E7%A8%8B%E5%BA%8F.html&title=仅三行按键程序 - Ciscosq&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://yoursite.com/cisconsq/%E4%BB%85%E4%B8%89%E8%A1%8C%E6%8C%89%E9%94%AE%E7%A8%8B%E5%BA%8F.html&title=仅三行按键程序 - Ciscosq&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://yoursite.com/cisconsq/%E4%BB%85%E4%B8%89%E8%A1%8C%E6%8C%89%E9%94%AE%E7%A8%8B%E5%BA%8F.html&title=仅三行按键程序 - Ciscosq&summary="
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-assets/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
         
-          <a href="/tag/hexo/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> hexo</a>
-        
-      </div>
-     -->
+      
+    </div>
   </section>
-</article>
 
-          </div>
+
         
+        
+      </section>
+    </article>
+  
+
+  
+    <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments card-shadow ">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;Comments</h4>
       
-    
-  </section>
-  
-    
-    <!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
-    
-    
+      
+      
+      
+        <section id="comments">
+          <div id="valine_container" class="valine_thread">
+            <i class="fas fa-spinner fa-spin fa-fw"></i>
+          </div>
+        </section>
+      
+    </section>
+  </article>
+
 
   
 
 
-	
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+
 </div>
 <aside class='l_side'>
   
   
-    
-    
-
-<section class="widget blogger  card-shadow widget-blur desktop">
-  <div class='content'>
-    
-      <div class='avatar'>
-        <img class='avatar' src='https://pic3.zhimg.com/v2-a392c9ceeed6bb2bb3d70ea5b7bbd9c8_1200x500.jpg'/>
-      </div>
-    
-    
-    
-      <div class="social-wrapper">
-        
-          
-            <a href="mailto:me@xaoxuu.com"
-              class="social fas fa-envelope flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-          
-            <a href="https://github.com/Ciscosq"
-              class="social fab fa-github flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-          
-            <a href="https://music.163.com/#/user/home?id=342101831"
-              class="social fas fa-headphones-alt flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-          
-            <a href="https://tongji.baidu.com/web/10000152028/overview/index?siteId=14523187"
-              class="social fas fa-eye flat-btn"
-              target="_blank"
-              rel="external nofollow noopener noreferrer">
-            </a>
-          
-        
-      </div>
-    
-  </div>
-</section>
-
-  
 
   
     
     
-  
-
-  <section class="widget category  card-shadow widget-blur desktop">
-    
-  <header>
-    
-      <a href='/blog/categories/'><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i><span class='name'>文章分类</span></a>
-    
-  </header>
 
 
-    <div class='content'>
-      <ul class="entry navigation">
-        
-          <li><a class="flat-box"
-            title="/category/hexo/" href="/category/hexo/"
-            id="categoryhexo"
-            ><div class='name'>hexo</div><div class='badge'>(1)</div></a></li>
-        
-      </ul>
-    </div>
-  </section>
-
-
-  
-
-  
-    
-    
-  
-
-  <section class="widget tagcloud  card-shadow widget-blur desktop">
-    
-  <header>
-    
-      <a href='/blog/tags/'><i class="fas fa-tags fa-fw" aria-hidden="true"></i><span class='name'>小尾巴</span></a>
-    
-  </header>
-
-
-    <div class='content'>
-      <a href="/tag/hexo/" style="font-size: 14px; color: #999">hexo</a>
-    </div>
-  </section>
-
-
-  
 
   
 
@@ -641,14 +604,6 @@
 <script>setLoadingBarProgress(80);</script>
 
 
-
-
-	<!-- 根据主题中的设置决定是否在archive中针对摘要部分的MathJax公式加载mathjax.js文件 -->
-	
-
-	
-
-
       <script>setLoadingBarProgress(60);</script>
     </div>
     <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
@@ -727,6 +682,36 @@
 
 
 
+
+  
+    
+<script src="/js/valine.js"></script>
+
+  
+  <script>
+  var GUEST_INFO = ['nick','mail','link'];
+  var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var notify = 'true' == true;
+  var verify = 'true' == true;
+  var valine = new Valine();
+  valine.init({
+    el: '#valine_container',
+    notify: notify,
+    verify: verify,
+    guest_info: guest_info,
+    
+    appId: "gM7I2XESEupNEgeN1f0Xq1P9-gzGzoHsz",
+    appKey: "lybFtdGMdLoHDTyxmlseoo7N",
+    placeholder: "快来评论吧~",
+    pageSize:'10',
+    avatar:'mp',
+    lang:'zh-cn',
+    visitor: 'false',
+    highlight:'true'
+  })
+  </script>
 
 
 
