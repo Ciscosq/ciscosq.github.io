@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>部署云服务器</title>
+      <link href="/2020/05/26/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+      <url>/2020/05/26/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
+      
+        <content type="html"><![CDATA[<p>云服务器可进行快照备份，保证数据永久不丢失</p><a id="more"></a><p>现在我简述一下如何快速部署云服务器</p><p>很高兴你阅读我的博文。</p><p>文章可能会涉及有关参考资料、教程、链接如有侵权请联系我删除！</p><h2 id="腾讯云服务器配置宝塔面板"><a href="#腾讯云服务器配置宝塔面板" class="headerlink" title="腾讯云服务器配置宝塔面板"></a><strong><font color="red" size="4">腾讯云服务器配置宝塔面板</font></strong></h2><p>先购买云服务器</p><p>举例先进入<a href="https://cloud.tencent.com/" target="_blank" rel="noopener">腾讯云</a> ，一直拉到下图所示并点击进入</p><p> <img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200526200219.png" alt></p><p>购买好，另开一个网页<a href="https://www.bt.cn/" target="_blank" rel="noopener">宝塔</a>，进入按照图示进行</p><p> <img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200526201406.png" alt></p><p><img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200526201440.png" alt></p><p>点击复制代码后，回到腾讯云云服务器界面，选择登录后，复制刚刚宝塔面板的代码，等待下载完成<img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200528135125.png" alt></p><p>下载完成，截图框中的，之后需要</p><p><img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200526202012.png" alt></p><p>在浏览器输入上图网址，打开</p><p>输入刚刚两行用户和密码，登入后，跳出安装软件选择一键安装（需要环境才可建立网站）</p><p>回到腾讯云域名解析，自定义二级域名<img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/44.png" alt></p><p>回到宝塔面板，点击网站，添加网站，输入刚刚解析自定义的二级域名，其他就默认好了，点击提交</p><p>接着按图进行</p><p> <img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200526203031.png" alt></p><p>出现下图就说明网站建立好</p><p> <img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200526203047.png" alt></p><h2 id="演示视频"><a href="#演示视频" class="headerlink" title="演示视频"></a><strong><font color="red" size="4">演示视频</font></strong></h2><p><img src="http://m.qpic.cn/psc?/V10Uc0t12EXAyI/IiWYOGDXamPRbRrcVz5uxkQEcAqqs.zzCDmPRNTRFZBYi1msk8KKT2fYfcTuHVsjtcqQ5Qb*4GQ8n1dHrTbJWg!!/b&bo=Gwe4AwAAAAACB4Q!&rf=viewer_4" alt></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>博客美观布置</title>
       <link href="/2020/04/10/%E5%8D%9A%E5%AE%A2%E7%BE%8E%E8%A7%82%E5%B8%83%E7%BD%AE/"/>
       <url>/2020/04/10/%E5%8D%9A%E5%AE%A2%E7%BE%8E%E8%A7%82%E5%B8%83%E7%BD%AE/</url>
