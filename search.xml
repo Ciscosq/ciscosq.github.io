@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>BBC</title>
+      <link href="/2020/06/16/BBC%E7%B3%BB%E5%88%97%E6%93%8D%E4%BD%9C/"/>
+      <url>/2020/06/16/BBC%E7%B3%BB%E5%88%97%E6%93%8D%E4%BD%9C/</url>
+      
+        <content type="html"><![CDATA[<p>本文将讲述一系列网页蓝牙与BBC板的“连接”</p><a id="more"></a><p>文章可能会涉及有关参考资料、教程、链接如有侵权请联系我删除！</p><h2 id="【01】设备连接"><a href="#【01】设备连接" class="headerlink" title="【01】设备连接"></a><strong><font color="red" size="4">【01】设备连接</font></strong></h2><p>功能：网页上显示蓝牙设备名称且能连接成功</p><p> <img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200616181511.png" alt></p><p>通过HTML显示按钮和表格来分别执行并体现<strong>蓝牙状态</strong>及<strong>设备状态</strong></p><p>操作流程：首先将BBC连接到板子，点击开始扫描，进入连接状态。</p><p>连接成功，蓝牙状态连接显示TRUE</p><p>当然这一切也可从控制台看出来</p><p> <img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/20200616183335.png" alt></p><p><strong><font color="red" size="4">演示功能</font></strong></p><p><img src="https://cdn.jsdelivr.net/gh/Ciscosq/imgHosting/Ciscosq-PIC/17.gif" alt></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网页蓝牙 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 网页蓝牙 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>部署云服务器</title>
       <link href="/2020/05/26/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
       <url>/2020/05/26/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
